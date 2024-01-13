@@ -14,6 +14,8 @@ public class MainCharacter : MonoBehaviour
     public GameObject orbPosObj;
     public LayerMask IgnoreMe;
     public GameObject[] orbsPrefab;
+    
+
 
 
     Animator animCtrl;
@@ -26,6 +28,7 @@ public class MainCharacter : MonoBehaviour
 
     [HideInInspector]
     public bool canMove = true;
+    public float life = 100;
 
     float speed;
     void Start()
@@ -51,7 +54,7 @@ public class MainCharacter : MonoBehaviour
             else {
                 dir = playerCamera.transform.forward;
             }
-            //Instantiate(orbsPrefab[0], new Vector3(0, 0, 0), Quaternion.identity);
+            Instantiate(orbsPrefab[0], orbPosObj.transform.position, Quaternion.LookRotation(dir));
 
 
         }
@@ -119,8 +122,6 @@ public class MainCharacter : MonoBehaviour
             animCtrl.SetBool("idle", false);
             animCtrl.SetBool("walk", false);
             animCtrl.SetBool("run", true);
-
         }
-
     }
 }
