@@ -14,9 +14,6 @@ public class MainCharacter : MonoBehaviour
     public GameObject orbPosObj;
     public LayerMask IgnoreMe;
     public GameObject[] orbsPrefab;
-    
-
-
 
     Animator animCtrl;
     Camera playerCamera;
@@ -28,7 +25,7 @@ public class MainCharacter : MonoBehaviour
 
     [HideInInspector]
     public bool canMove = true;
-    public float life = 100;
+    public float health = 100;
 
     float speed;
     void Start()
@@ -122,6 +119,16 @@ public class MainCharacter : MonoBehaviour
             animCtrl.SetBool("idle", false);
             animCtrl.SetBool("walk", false);
             animCtrl.SetBool("run", true);
+        }
+    }
+
+    public void removeHealth(float damage) {
+        health -= damage;
+
+        if (health <= 0) {
+            // death screen
+            Debug.Log("DIES");
+            Destroy(gameObject);
         }
     }
 }

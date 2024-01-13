@@ -7,6 +7,7 @@ public class explode : MonoBehaviour
     // Start is called before the first frame update
     public float maxSize = 3.0f;  // Set the maximum size you want
     public float growthRate = 0.1f;  // Set the rate at which the object grows per frame
+    public float damage = 50;
 
     void Start()
     {
@@ -45,5 +46,9 @@ public class explode : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.tag == "enemy") {
+            Debug.Log(collision.gameObject.name);
+            collision.gameObject.GetComponent<enemyController>().removeHealth(damage);
+        }
     }
 }
