@@ -18,6 +18,10 @@ public class EnemyFollow : MonoBehaviour
     void Update()
     {
         if (player == null || MainCharacter.dead) return;
-        enemy.SetDestination(player.position);
+        
+        if (Vector3.Distance(enemy.nextPosition,player.position) <=20)
+            enemy.SetDestination(player.position);
+        else if (enemy.nextPosition != null)
+            enemy.SetDestination(enemy.nextPosition);
     }
 }

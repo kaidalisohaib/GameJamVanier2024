@@ -85,33 +85,12 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:GameJam2024/Assets/Monsters/animation/SpiderMovement.controller
-  m_Name: Base Layer
-  m_ChildStates:
-  - serializedVersion: 1
-    m_State: {fileID: 5203887484644353073}
-    m_Position: {x: 570, y: 140, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -3260629585046427216}
-    m_Position: {x: 400, y: 290, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 3682713985365795846}
-    m_Position: {x: 220, y: 130, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -1652312862397102186}
-    m_Position: {x: 440, y: 30, z: 0}
-  m_ChildStateMachines: []
-  m_AnyStateTransitions: []
-  m_EntryTransitions: []
-  m_StateMachineTransitions: {}
-=======
   m_Name: SpiderArmature_Spider_Walk
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5016705853641840245}
   - {fileID: 8216906591305203337}
->>>>>>> sohaib:GameJam2024/Assets/Monsters/animation/Skeleton/Skeleton.controller
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0

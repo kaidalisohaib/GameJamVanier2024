@@ -500,7 +500,7 @@ NavMeshAgent:
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1.02
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -556,7 +556,7 @@ MonoBehaviour:
   attackCooldown: 0.7464
   health: 100
   damage: 30
-  damageDistance: 1.15
+  damageDistance: 2
   growthRate: 1
   monsterScore: 15
 --- !u!65 &915410757857468734

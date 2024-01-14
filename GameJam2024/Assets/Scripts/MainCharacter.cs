@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
@@ -16,6 +17,8 @@ public class MainCharacter : MonoBehaviour
     public float lookSpeed = 2.0f;
     public float lookXLimit = 45.0f;
     public float maxHealth = 100;
+    public float shotCooldown = 1;
+    
     public TMP_Text textDisplayed;
     float health;
     public LayerMask IgnoreMe;
@@ -31,7 +34,8 @@ public class MainCharacter : MonoBehaviour
     float rotationX = 0;
     Transform rootTrsf;
     RectTransform MCLifeShow;
-    
+    RectTransform MCManaShow;
+
 
 
     [HideInInspector]
@@ -40,11 +44,14 @@ public class MainCharacter : MonoBehaviour
 
 
     float speed;
+    private float time =-1;
+
     void Start()
     {
         health = maxHealth;
         cameraParent = GameObject.Find("camParPos");
         MCLifeShow = GameObject.Find("MCLifeShow").GetComponent<RectTransform>();
+        MCManaShow = GameObject.Find("MCManaShow").GetComponent<RectTransform>();
         orbPosObj = GameObject.Find("orbPos");
         playerCamera = Camera.main;
         characterController = GetComponent<CharacterController>();
@@ -53,14 +60,15 @@ public class MainCharacter : MonoBehaviour
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        textDisplayed.text = score + " pts";
+        
     }
 
     void Update()
     {
         textDisplayed.text = score +"";
 
-        if (!dead && Input.GetButtonDown("Fire1")) {
+        if (!dead && Input.GetButtonDown("Fire1")&&(Time.time - time >= shotCooldown)) {
+            time = Time.time;
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
             Vector3 dir;
@@ -78,7 +86,14 @@ public class MainCharacter : MonoBehaviour
         movement();
         applyAnim();
         MCLifeShow.localScale = new Vector3(health / maxHealth, 1, 1);
-
+        if (time != -1 && Time.time - time <= shotCooldown)
+        {
+            MCManaShow.localScale = new Vector3((shotCooldown - (Time.time - time)), 1, 1);
+        }
+        else {
+            MCManaShow.localScale = new Vector3(1, 1, 1);
+        }
+        
     }
 
     void movement() {
