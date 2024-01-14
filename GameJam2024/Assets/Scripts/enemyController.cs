@@ -16,6 +16,8 @@ public class enemyController : MonoBehaviour
 
     float timer;
     MainCharacter playerController;
+    public int monsterScore;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,6 +76,8 @@ public class enemyController : MonoBehaviour
     public void removeHealth(float damage) {
         health -= damage;
         if (health <= 0) {
+            MainCharacter.score += monsterScore;
+            Debug.Log(MainCharacter.score);
             health = 0;
             StartCoroutine(ScaleDownAndDie());
         }
