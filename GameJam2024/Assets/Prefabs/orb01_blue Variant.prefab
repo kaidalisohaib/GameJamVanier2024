@@ -13,6 +13,10 @@ PrefabInstance:
       value: orb01_blue Variant
       objectReference: {fileID: 0}
     - target: {fileID: 158280, guid: 59d1ef214639e9d47a9c84b42033ae5f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 158280, guid: 59d1ef214639e9d47a9c84b42033ae5f, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}

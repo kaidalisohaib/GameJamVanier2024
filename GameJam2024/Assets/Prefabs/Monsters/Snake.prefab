@@ -728,6 +728,8 @@ MonoBehaviour:
   health: 100
   damage: 30
   damageDistance: 2.5
+  growthRate: 7
+  monsterScore: 60
 --- !u!135 &1146055670836068765
 SphereCollider:
   m_ObjectHideFlags: 0

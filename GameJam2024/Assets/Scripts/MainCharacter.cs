@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 
 public class MainCharacter : MonoBehaviour
 {
+    public static int score = 0;
     public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
     public float jumpSpeed = 8.0f;
@@ -12,6 +16,7 @@ public class MainCharacter : MonoBehaviour
     public float lookSpeed = 2.0f;
     public float lookXLimit = 45.0f;
     public float maxHealth = 100;
+    public TMP_Text textDisplayed;
     float health;
     public LayerMask IgnoreMe;
     public GameObject orbsPrefab;
@@ -26,6 +31,8 @@ public class MainCharacter : MonoBehaviour
     float rotationX = 0;
     Transform rootTrsf;
     RectTransform MCLifeShow;
+    
+
 
     [HideInInspector]
     public bool canMove = true;
@@ -46,11 +53,13 @@ public class MainCharacter : MonoBehaviour
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        textDisplayed.text = score + " pts";
     }
 
     void Update()
     {
-        
+        textDisplayed.text = score +"";
+
         if (!dead && Input.GetButtonDown("Fire1")) {
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
@@ -152,7 +161,6 @@ public class MainCharacter : MonoBehaviour
 
     public void removeHealth(float damage) {
         health -= damage;
-
         if (health <= 0) {
             health = 0;
             // death screen

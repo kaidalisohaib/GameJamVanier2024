@@ -557,6 +557,8 @@ MonoBehaviour:
   health: 100
   damage: 30
   damageDistance: 1.15
+  growthRate: 7
+  monsterScore: 15
 --- !u!65 &915410757857468734
 BoxCollider:
   m_ObjectHideFlags: 0

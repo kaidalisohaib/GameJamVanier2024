@@ -1489,6 +1489,7 @@ MonoBehaviour:
   damage: 30
   damageDistance: 2.5
   growthRate: 1
+  monsterScore: 30
 --- !u!135 &5238413147201862546
 SphereCollider:
   m_ObjectHideFlags: 0
