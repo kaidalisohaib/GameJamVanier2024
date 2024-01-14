@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class MainCharacter : MonoBehaviour
@@ -35,6 +36,7 @@ public class MainCharacter : MonoBehaviour
     float speed;
     void Start()
     {
+        dead = false;
         health = maxHealth;
         cameraParent = GameObject.Find("camParPos");
         MCLifeShow = GameObject.Find("MCLifeShow").GetComponent<RectTransform>();
@@ -157,7 +159,17 @@ public class MainCharacter : MonoBehaviour
             // death screen
             dead = true;
             animCtrl.SetBool("dead", true);
+            StartCoroutine(die());
             //Destroy(gameObject);
         }
     }
+
+    IEnumerator die()
+    {
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("Die", LoadSceneMode.Single);
+
+    }
+
 }

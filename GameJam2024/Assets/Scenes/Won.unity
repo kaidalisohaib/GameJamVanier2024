@@ -5960,7 +5960,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You will have a better luck next time...
+  m_text: You won the magic contest!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9ec6528806c880c409b5ed8f1ea19b46, type: 2}
   m_sharedMaterial: {fileID: -8907966330315617247, guid: 9ec6528806c880c409b5ed8f1ea19b46, type: 2}
@@ -5987,7 +5987,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.6
+  m_fontSize: 52.1
   m_fontSizeBase: 38.2
   m_fontWeight: 400
   m_enableAutoSizing: 1
