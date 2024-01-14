@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+ 
 public class MainCharacter : MonoBehaviour
 {
+    private int teleportCount = 0;
+    private TeleportationManager teleportationManager;
+    public delegate void PlayerEnterExitEvent(Transform exitPoint);
+    public static event PlayerEnterExitEvent OnPlayerEnterExit;
+
+     // Singleton instance
+    public static MainCharacter Instance { get; private set; }
+
     public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
     public float jumpSpeed = 8.0f;
@@ -14,6 +22,7 @@ public class MainCharacter : MonoBehaviour
     public GameObject orbPosObj;
     public LayerMask IgnoreMe;
     public GameObject[] orbsPrefab;
+    
 
 
     Animator animCtrl;
@@ -28,6 +37,20 @@ public class MainCharacter : MonoBehaviour
     public bool canMove = true;
 
     float speed;
+
+void Awake()
+    {
+        // Set the singleton instance
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         playerCamera = Camera.main;
@@ -36,6 +59,8 @@ public class MainCharacter : MonoBehaviour
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        teleportationManager = FindObjectOfType<TeleportationManager>();
+        
     }
 
     void Update()
@@ -57,6 +82,18 @@ public class MainCharacter : MonoBehaviour
         }
         movement();
         applyAnim();
+
+            // Check if the player walked through an exit point
+            // Check if the player walked through an exit point
+        if (teleportCount < teleportationManager.maxTeleportCount)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f, LayerMask.GetMask("ExitPoint"));
+            if (colliders.Length > 0)
+            {
+                // Player walked through an exit point
+                TeleportPlayer();
+            }
+        }
     }
 
     void movement() {
@@ -123,4 +160,24 @@ public class MainCharacter : MonoBehaviour
         }
 
     }
+
+    private void TeleportPlayer()
+{
+    int randomIndex = Random.Range(0, teleportationManager.entryPoints.Length);
+    Vector3 teleportPosition = teleportationManager.entryPoints[randomIndex].position;
+
+    // Teleport the player to the random entry point
+    transform.position = teleportPosition;
+
+    teleportCount++;
+
+    if (teleportCount >= teleportationManager.maxTeleportCount)
+    {
+        // Teleport to the boss room if max teleport count is reached
+        transform.position = teleportationManager.bossRoomEntry.position;
+        teleportCount = 0;
+    }
 }
+
+}
+
