@@ -83,8 +83,8 @@ void Awake()
         movement();
         applyAnim();
 
-            // Check if the player walked through an exit point
-            // Check if the player walked through an exit point
+        // Check if the player walked through an exit point
+        // Check if the player walked through an exit point
         if (teleportCount < teleportationManager.maxTeleportCount)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f, LayerMask.GetMask("ExitPoint"));
@@ -162,22 +162,22 @@ void Awake()
     }
 
     private void TeleportPlayer()
-{
-    int randomIndex = Random.Range(0, teleportationManager.entryPoints.Length);
-    Vector3 teleportPosition = teleportationManager.entryPoints[randomIndex].position;
-
-    // Teleport the player to the random entry point
-    transform.position = teleportPosition;
-
-    teleportCount++;
-
-    if (teleportCount >= teleportationManager.maxTeleportCount)
     {
-        // Teleport to the boss room if max teleport count is reached
-        transform.position = teleportationManager.bossRoomEntry.position;
-        teleportCount = 0;
+        int randomIndex = Random.Range(0, teleportationManager.entryPoints.Length);
+        Vector3 teleportPosition = teleportationManager.entryPoints[randomIndex].position;
+
+        // Teleport the player to the random entry point
+        transform.position = teleportPosition;
+
+        if(teleportationManager.teleportCount < teleportationManager.maxTeleportCount)
+            teleportationManager.teleportCount++;
+
+        if (teleportationManager.teleportCount >= teleportationManager.maxTeleportCount)
+        {
+            // Teleport to the boss room if max teleport count is reached
+            // spawn the portal door   
+        }
     }
-}
 
 }
 
