@@ -12,6 +12,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: orb01_blue Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 158280, guid: 59d1ef214639e9d47a9c84b42033ae5f, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 444846, guid: 59d1ef214639e9d47a9c84b42033ae5f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 444846, guid: 59d1ef214639e9d47a9c84b42033ae5f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 444846, guid: 59d1ef214639e9d47a9c84b42033ae5f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 444846, guid: 59d1ef214639e9d47a9c84b42033ae5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.022971466
@@ -55,7 +71,7 @@ PrefabInstance:
     - target: {fileID: 3304300, guid: 59d1ef214639e9d47a9c84b42033ae5f, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300188, guid: 7374575f12d49ba459e91009f7a9ec62, type: 3}
+      objectReference: {fileID: 4300180, guid: 7374575f12d49ba459e91009f7a9ec62, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -88,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyTime: 5
-  speed: 7
+  speed: 20
   explosion: {fileID: 9031453924494444240, guid: 22e70f96f70906c4689e46e2a2de4b10, type: 3}
 --- !u!135 &2738766592169786755
 SphereCollider:
@@ -103,7 +119,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0

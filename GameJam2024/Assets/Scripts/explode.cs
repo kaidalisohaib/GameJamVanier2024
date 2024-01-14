@@ -45,9 +45,7 @@ public class explode : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.tag == "enemy") {
-            Debug.Log(collision.gameObject.name);
             collision.gameObject.GetComponent<enemyController>().removeHealth(damage);
         }
     }

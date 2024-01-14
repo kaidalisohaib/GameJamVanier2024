@@ -34,7 +34,6 @@ public class goForward : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        Debug.Log("COLLISION");
         Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(gameObject); // destroy the grenade
     }
