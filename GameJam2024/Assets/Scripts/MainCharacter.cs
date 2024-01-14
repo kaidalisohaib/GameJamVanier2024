@@ -32,7 +32,6 @@ public class MainCharacter : MonoBehaviour
     float health;
     public LayerMask IgnoreMe;
     public GameObject orbsPrefab;
-    public GameObject[] orbsPrefab;
     
 
 
@@ -46,8 +45,8 @@ public class MainCharacter : MonoBehaviour
     Transform rootTrsf;
     RectTransform MCLifeShow;
     RectTransform MCManaShow;
-
-
+    GameObject PortalRoot;
+    public GameObject[] portalPossLoc;
 
     [HideInInspector]
     public bool canMove = true;
@@ -57,8 +56,8 @@ public class MainCharacter : MonoBehaviour
     float speed;
     private float time =-1;
 
-
-void Awake()
+    Vector3 initLocalCam;
+    void Awake()
     {
         // Set the singleton instance
         if (Instance == null)
@@ -73,6 +72,7 @@ void Awake()
 
     void Start()
     {
+        score = 0;
         dead = false;
         health = maxHealth;
         cameraParent = GameObject.Find("camParPos");
@@ -88,17 +88,24 @@ void Awake()
         Cursor.visible = false;
         
         teleportationManager = FindObjectOfType<TeleportationManager>();
-        
+
+        initLocalCam = playerCamera.transform.localPosition;
+        PortalRoot = GameObject.Find("PortalRoot");
     }
 
     void Update()
     {
         textDisplayed.text = score +"";
+   
 
         if (!dead && Input.GetButtonDown("Fire1")&&(Time.time - time >= shotCooldown)) {
             time = Time.time;
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+            
+
             RaycastHit hit;
+            //Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            Ray ray = new Ray(orbPosObj.transform.position, Camera.main.transform.forward);
             Vector3 dir;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~IgnoreMe))
             {
@@ -121,21 +128,29 @@ void Awake()
         else {
             MCManaShow.localScale = new Vector3(1, 1, 1);
         }
-        
+    }
+    bool tping = false;
 
+    private void FixedUpdate()
+    {
         // Check if the player walked through an exit point
-        // Check if the player walked through an exit point
-        if (teleportCount < teleportationManager.maxTeleportCount)
+        if (!tping)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f, LayerMask.GetMask("ExitPoint"));
+            if (teleportCount == teleportationManager.maxTeleportCount) {
+                int randomIndex = Random.Range(0, portalPossLoc.Length);
+                PortalRoot.transform.position = portalPossLoc[randomIndex].transform.position;
+                teleportCount += 1;
+
+            }
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 0.1f, LayerMask.GetMask("ExitPoint"));
             if (colliders.Length > 0)
             {
+                teleportCount += 1;
                 // Player walked through an exit point
                 TeleportPlayer();
             }
         }
     }
-
     void movement() {
         if (dead)
         {
@@ -159,7 +174,7 @@ void Awake()
         float movementDirectionY = moveDirection.y;
         moveDirection = ((forward * curSpeedX) + (right * curSpeedY)).normalized * (isRunning ? runningSpeed : walkingSpeed);
       
-        rootTrsf.localRotation = Quaternion.Lerp(rootTrsf.localRotation, Quaternion.Euler(90 + angleToCenter, -90, -90), Time.deltaTime * 5);
+        rootTrsf.localRotation = Quaternion.Lerp(rootTrsf.localRotation, Quaternion.Euler(90 + angleToCenter, -90, -90), Time.deltaTime * 7);
 
 
 
@@ -236,6 +251,8 @@ void Awake()
 
     private void TeleportPlayer()
     {
+        tping = true;
+
         int randomIndex = Random.Range(0, teleportationManager.entryPoints.Length);
         Vector3 teleportPosition = teleportationManager.entryPoints[randomIndex].position;
 
@@ -250,6 +267,7 @@ void Awake()
             // Teleport to the boss room if max teleport count is reached
             // spawn the portal door   
         }
+        tping = false;
     }
 
 }
