@@ -23,6 +23,7 @@ public class MainCharacter : MonoBehaviour
     float health;
     public LayerMask IgnoreMe;
     public GameObject orbsPrefab;
+    public AudioSource MCAudio;
 
 
     GameObject orbPosObj;
@@ -53,6 +54,7 @@ public class MainCharacter : MonoBehaviour
         MCLifeShow = GameObject.Find("MCLifeShow").GetComponent<RectTransform>();
         MCManaShow = GameObject.Find("MCManaShow").GetComponent<RectTransform>();
         orbPosObj = GameObject.Find("orbPos");
+        MCAudio = GameObject.Find("MCSound").GetComponent<AudioSource>();
         playerCamera = Camera.main;
         characterController = GetComponent<CharacterController>();
         animCtrl = GetComponent<Animator>();
@@ -68,6 +70,9 @@ public class MainCharacter : MonoBehaviour
         textDisplayed.text = score +"";
 
         if (!dead && Input.GetButtonDown("Fire1")&&(Time.time - time >= shotCooldown)) {
+            MCAudio.loop = false;
+            MCAudio.Play();
+           
             time = Time.time;
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
