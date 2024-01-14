@@ -7,10 +7,18 @@ using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
-
+ 
 public class MainCharacter : MonoBehaviour
 {
     public static int score = 0;
+    private int teleportCount = 0;
+    private TeleportationManager teleportationManager;
+    public delegate void PlayerEnterExitEvent(Transform exitPoint);
+    public static event PlayerEnterExitEvent OnPlayerEnterExit;
+
+     // Singleton instance
+    public static MainCharacter Instance { get; private set; }
+
     public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
     public float jumpSpeed = 8.0f;
@@ -24,6 +32,8 @@ public class MainCharacter : MonoBehaviour
     float health;
     public LayerMask IgnoreMe;
     public GameObject orbsPrefab;
+    public GameObject[] orbsPrefab;
+    
 
 
     GameObject orbPosObj;
@@ -47,6 +57,20 @@ public class MainCharacter : MonoBehaviour
     float speed;
     private float time =-1;
 
+
+void Awake()
+    {
+        // Set the singleton instance
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         dead = false;
@@ -62,6 +86,8 @@ public class MainCharacter : MonoBehaviour
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+        teleportationManager = FindObjectOfType<TeleportationManager>();
         
     }
 
@@ -96,6 +122,18 @@ public class MainCharacter : MonoBehaviour
             MCManaShow.localScale = new Vector3(1, 1, 1);
         }
         
+
+        // Check if the player walked through an exit point
+        // Check if the player walked through an exit point
+        if (teleportCount < teleportationManager.maxTeleportCount)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f, LayerMask.GetMask("ExitPoint"));
+            if (colliders.Length > 0)
+            {
+                // Player walked through an exit point
+                TeleportPlayer();
+            }
+        }
     }
 
     void movement() {
@@ -195,4 +233,24 @@ public class MainCharacter : MonoBehaviour
 
     }
 
+
+    private void TeleportPlayer()
+    {
+        int randomIndex = Random.Range(0, teleportationManager.entryPoints.Length);
+        Vector3 teleportPosition = teleportationManager.entryPoints[randomIndex].position;
+
+        // Teleport the player to the random entry point
+        transform.position = teleportPosition;
+
+        if(teleportationManager.teleportCount < teleportationManager.maxTeleportCount)
+            teleportationManager.teleportCount++;
+
+        if (teleportationManager.teleportCount >= teleportationManager.maxTeleportCount)
+        {
+            // Teleport to the boss room if max teleport count is reached
+            // spawn the portal door   
+        }
+    }
+
 }
+
