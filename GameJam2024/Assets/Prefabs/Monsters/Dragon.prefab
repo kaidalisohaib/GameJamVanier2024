@@ -866,6 +866,7 @@ MonoBehaviour:
   health: 100
   damage: 30
   damageDistance: 1.21
+  growthRate: 1
 --- !u!135 &6264185801440836129
 SphereCollider:
   m_ObjectHideFlags: 0

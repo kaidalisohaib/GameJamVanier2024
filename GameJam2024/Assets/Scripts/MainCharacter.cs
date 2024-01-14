@@ -77,7 +77,6 @@ public class MainCharacter : MonoBehaviour
         {
             var c = cameraParent.transform;
             c.Rotate(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
-            c.Rotate(-Input.GetAxis("Mouse Y") * lookSpeed, 0, 0);
             c.rotation = Quaternion.Euler(Mathf.Clamp(cameraParent.transform.rotation.eulerAngles.x, -lookXLimit, lookXLimit), cameraParent.transform.rotation.eulerAngles.y, 0);
             return;
         }
