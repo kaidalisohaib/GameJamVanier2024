@@ -13,6 +13,8 @@ public class enemyController : MonoBehaviour
     public float damage = 30;
     public float damageDistance = 2;
     public float growthRate = 7.0f;
+    public AudioSource audioSource;
+    public AudioClip[] audioClips = new AudioClip[2];
 
     float timer;
     MainCharacter playerController;
@@ -21,6 +23,7 @@ public class enemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource.loop = true;
         timer = attackCooldown;
         lastPosition = transform.position;
         animator = GetComponent<Animator>();
@@ -39,7 +42,8 @@ public class enemyController : MonoBehaviour
             return;
         }
         if (timer <= 0) {
-
+            audioSource.clip = audioClips[1];
+            audioSource.Play();
             playerController.removeHealth(damage);
             timer = attackCooldown;
         }
@@ -57,6 +61,8 @@ public class enemyController : MonoBehaviour
         }
         if (distance <= damageDistance)
         {
+           
+            
             animator.SetBool("isAttacking", true);
             animator.SetBool("isIdle", false);
             animator.SetBool("isRunning", false);
@@ -66,6 +72,7 @@ public class enemyController : MonoBehaviour
             }
         } else if(distance > damageDistance)
         {
+            audioSource.clip = audioClips[0];
             animator.SetBool("isAttacking", false);
             timer = attackCooldown;
         }
@@ -77,7 +84,6 @@ public class enemyController : MonoBehaviour
         health -= damage;
         if (health <= 0) {
             MainCharacter.score += monsterScore;
-            Debug.Log(MainCharacter.score);
             health = 0;
             StartCoroutine(ScaleDownAndDie());
         }

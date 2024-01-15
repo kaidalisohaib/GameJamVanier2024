@@ -32,6 +32,7 @@ public class MainCharacter : MonoBehaviour
     float health;
     public LayerMask IgnoreMe;
     public GameObject orbsPrefab;
+    public AudioSource MCAudio;
     
 
 
@@ -51,7 +52,7 @@ public class MainCharacter : MonoBehaviour
     [HideInInspector]
     public bool canMove = true;
     public static bool dead = false;
-
+    TMP_Text open;
 
     float speed;
     private float time =-1;
@@ -72,6 +73,9 @@ public class MainCharacter : MonoBehaviour
 
     void Start()
     {
+        open = GameObject.Find("Open").GetComponent<TMP_Text>();
+        open.text = "Seach for the portal...";
+
         score = 0;
         dead = false;
         health = maxHealth;
@@ -79,6 +83,7 @@ public class MainCharacter : MonoBehaviour
         MCLifeShow = GameObject.Find("MCLifeShow").GetComponent<RectTransform>();
         MCManaShow = GameObject.Find("MCManaShow").GetComponent<RectTransform>();
         orbPosObj = GameObject.Find("orbPos");
+        MCAudio = GameObject.Find("MCSound").GetComponent<AudioSource>();
         playerCamera = Camera.main;
         characterController = GetComponent<CharacterController>();
         animCtrl = GetComponent<Animator>();
@@ -99,6 +104,9 @@ public class MainCharacter : MonoBehaviour
    
 
         if (!dead && Input.GetButtonDown("Fire1")&&(Time.time - time >= shotCooldown)) {
+            MCAudio.loop = false;
+            MCAudio.Play();
+           
             time = Time.time;
 
             
@@ -139,6 +147,8 @@ public class MainCharacter : MonoBehaviour
             if (teleportCount == teleportationManager.maxTeleportCount) {
                 int randomIndex = Random.Range(0, portalPossLoc.Length);
                 PortalRoot.transform.position = portalPossLoc[randomIndex].transform.position;
+                open.text = "The portal is now open, find it!";
+
                 teleportCount += 1;
 
             }
