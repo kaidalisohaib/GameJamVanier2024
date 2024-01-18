@@ -45,7 +45,9 @@ public class MainCharacter : MonoBehaviour
     float rotationX = 0;
     Transform rootTrsf;
     RectTransform MCLifeShow;
+    Vector3 localScaleLife = new Vector3(1, 1, 1);
     RectTransform MCManaShow;
+    Vector3 localScaleMana = new Vector3(1, 1, 1);
     GameObject PortalRoot;
     public GameObject[] portalPossLoc;
 
@@ -75,7 +77,7 @@ public class MainCharacter : MonoBehaviour
     {
         open = GameObject.Find("Open").GetComponent<TMP_Text>();
         open.text = "Seach for the portal...";
-
+        
         score = 0;
         dead = false;
         health = maxHealth;
@@ -96,6 +98,9 @@ public class MainCharacter : MonoBehaviour
 
         initLocalCam = playerCamera.transform.localPosition;
         PortalRoot = GameObject.Find("PortalRoot");
+        MCLifeShow.localScale = localScaleLife;
+        MCManaShow.localScale = localScaleMana;
+        
     }
 
     void Update()
@@ -128,14 +133,16 @@ public class MainCharacter : MonoBehaviour
         }
         movement();
         applyAnim();
-        MCLifeShow.localScale = new Vector3(health / maxHealth, 1, 1);
+        localScaleLife.x = health / maxHealth;
         if (time != -1 && Time.time - time <= shotCooldown)
         {
-            MCManaShow.localScale = new Vector3((shotCooldown - (Time.time - time)), 1, 1);
+            localScaleMana.x = (shotCooldown - (Time.time - time));
         }
         else {
-            MCManaShow.localScale = new Vector3(1, 1, 1);
+            localScaleMana.x = 1;
         }
+        MCLifeShow.localScale = localScaleLife;
+        MCManaShow.localScale = localScaleMana;
     }
     bool tping = false;
 
